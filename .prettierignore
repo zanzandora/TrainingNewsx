@@ -1,0 +1,81 @@
+# Dependency folders
+node_modules
+bower_components
+
+# Build output folders
+dist
+build
+out
+.cache
+.nuxt
+.output
+.next
+.svelte-kit
+.vitepress/cache
+.vitepress/dist
+.vuepress/.temp
+.vuepress/.cache
+.vuepress/dist
+
+# Editor and IDE configurations
+.vscode
+.idea
+.fleet
+.sublime-workspace
+*.log
+*.zip
+*.rar
+
+# Git and version control
+.git
+.gitignore
+.gitattributes
+.husky
+
+# Runtime and temporary files
+tmp
+temp
+logs
+
+# Lock files and dependency manifests
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Configuration files
+.env
+.env.*
+.editorconfig
+.npmrc
+.nvmrc
+.eslintcache
+.prettierignore
+.stylelintcache
+
+# Common data and assets
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.svg
+*.webp
+*.mp4
+*.webm
+*.ogg
+*.mp3
+*.wav
+*.flac
+*.aac
+*.pdf
+*.mdx
+*.jsonc
+
+# Nuxt, Vue and other specific framework files
+/coverage
+/public
+/test
+/server
+/assets
+/static
+/lib
+/api
