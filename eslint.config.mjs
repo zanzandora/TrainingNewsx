@@ -9,7 +9,7 @@ export default withNuxt(
       type: 'app',
       vue: true,
       typescript: true,
-      ignores: ['.pnpm-store/**'],
+      ignores: ['.npm-store/**'],
       stylistic: false,
     },
     {
