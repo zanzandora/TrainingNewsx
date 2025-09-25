@@ -74,8 +74,6 @@ pnpm-lock.yaml
 /coverage
 /public
 /test
-/server
 /assets
 /static
 /lib
-/api
