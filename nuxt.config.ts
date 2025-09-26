@@ -27,8 +27,10 @@ export default defineNuxtConfig({
   },
 
   // *Runtime config
+  // !không nên dùng trực tiếp process.env trong nuxt.config.ts/js
+  // !Nếu lỡ dùng trong config, hoặc trong code có thể chạy client-side, thì biến env đó sẽ không tồn tại trên browser → gây bug runtime.
   runtimeConfig: {
-    mongodbUri: `${process.env.MONGODB_URI}/News`,
+    mongodbUri: ``,
   },
 
   // *Fonts config
