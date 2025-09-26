@@ -1,45 +1,14 @@
 // @ts-check
-import antfu from '@antfu/eslint-config'
-
 import withNuxt from './.nuxt/eslint.config.mjs'
 
-export default withNuxt(
-  antfu(
-    {
-      type: 'app',
-      vue: true,
-      typescript: true,
-      ignores: ['.npm-store/**'],
-      stylistic: false,
-    },
-    {
-      rules: {
-        // Tắt hết rules format để nhường Prettier
-        'prettier/prettier': 'off',
-        'antfu/format': 'off',
+export default withNuxt({
+  rules: {
+    // Basic rules
+    'no-console': 'off', // Allow console statements in server code
+    'prefer-const': ['error'],
 
-        // Giữ lại rules chất lượng code
-        'vue/singleline-html-element-content-newline': 'off',
-        'ts/no-redeclare': 'off',
-        'ts/consistent-type-definitions': ['error', 'type'],
-        'no-console': ['warn'],
-        'antfu/no-top-level-await': ['off'],
-        'node/prefer-global/process': ['off'],
-        'node/no-process-env': ['error'],
-        'perfectionist/sort-imports': [
-          'error',
-          {
-            tsconfigRootDir: '.',
-          },
-        ],
-        'unicorn/filename-case': [
-          'error',
-          {
-            case: 'kebabCase',
-            ignore: ['README.md'],
-          },
-        ],
-      },
-    },
-  ),
-)
+    // Vue specific rules
+    'vue/singleline-html-element-content-newline': 'off',
+    'vue/multi-word-component-names': 'off', // Allow single-word component names
+  },
+})

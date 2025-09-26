@@ -7,16 +7,28 @@ export default defineNuxtConfig({
   modules: ['@nuxt/eslint', '@nuxt/image', '@nuxt/ui', '@nuxt/fonts'],
   css: ['~/assets/css/main.css'],
 
-  // *Eslint config
+  // *ESLint config
   eslint: {
     config: {
-      standalone: false,
+      standalone: false, // Required when using with external ESLint configs
     },
   },
 
   // *Vite config
   vite: {
     plugins: [tailwindcss()],
+  },
+
+  // *PostCSS config
+  postcss: {
+    plugins: {
+      '@tailwindcss/postcss': {},
+    },
+  },
+
+  // *Runtime config
+  runtimeConfig: {
+    mongodbUri: `${process.env.MONGODB_URI}/News`,
   },
 
   // *Fonts config
