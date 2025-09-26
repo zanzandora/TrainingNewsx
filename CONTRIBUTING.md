@@ -120,17 +120,17 @@ Make your changes and commit them with clear and descriptive messages. Follow th
 
 ### Step 5: Assigning and Reviewing
 
-- **Assignees**: **Le Dinh Phung** will be assigned to all new issues and pull requests to handle the technical implementation.
-- **Reviewers**: **Le Van An** will be added as a reviewer to all pull requests to verify that the changes meet the requirements.
+- **Assignees**: **Mai Minh Tu, Le Thien Tri, Nguyen Minh Huyen** will be assigned to all new issues and pull requests to handle the technical implementation.
+- **Reviewers**: **Mai Minh Tu, Le Thien Tri, Nguyen Minh Huyen** will be added as a reviewer to all pull requests to verify that the changes meet the requirements.
 
 ### Step 6: Code Review and Merging to `develop`
 
-- **Code Review**: **Le Van An** is responsible for the final review and approval of all pull requests targeting `develop`. At least one approval is required before merging.
-- **Conflict Resolution and Merging**: **Le Dinh Phung** is responsible for resolving any merge conflicts and merging the pull request into `develop` after it has been approved.
+- **Code Review**: **Mai Minh Tu, Le Thien Tri, Nguyen Minh Huyen** is responsible for the final review and approval of all pull requests targeting `develop`. At least one approval is required before merging.
+- **Conflict Resolution and Merging**: **Mai Minh Tu, Le Thien Tri, Nguyen Minh Huyen** is responsible for resolving any merge conflicts and merging the pull request into `develop` after it has been approved.
 
 ### Step 7: Promoting to QA
 
-- When a set of features is ready for testing, **Le Dinh Phung** will merge the `develop` branch into the `qa` branch. This triggers a deployment to the QA environment.
+- When a set of features is ready for testing, **Mai Minh Tu** will merge the `develop` branch into the `qa` branch. This triggers a deployment to the QA environment.
 
   ```bash
   git checkout qa
@@ -151,7 +151,7 @@ We use Vercel for automated deployments:
 
 Here are the specific roles and steps for creating a new release:
 
-1.  **QA Testing and Approval**: **Le Van An** performs thorough testing on the **QA environment**. If any bugs are found, they should be reported as new issues. **Le Dinh Phung** will fix them in a `bugfix` branch, merge it into `develop`, and then promote the changes to `qa` for re-testing.
+1.  **QA Testing and Approval**: **Mai Minh Tu** performs thorough testing on the **QA environment**. If any bugs are found, they should be reported as new issues. **Le Dinh Phung** will fix them in a `bugfix` branch, merge it into `develop`, and then promote the changes to `qa` for re-testing.
 2.  **Initiate Release**: Once the `qa` branch is stable and approved by **Le Van An**, **Le Dinh Phung** will create a `release` branch from `qa`:
 
     ```bash
@@ -160,7 +160,7 @@ Here are the specific roles and steps for creating a new release:
     git flow release start v1.2.0
     ```
 
-3.  **Finish Release**: After approval, **Le Dinh Phung** will use `git-flow` to automate the merging and tagging process:
+3.  **Finish Release**: After approval, **Mai Minh Tu** will use `git-flow` to automate the merging and tagging process:
 
     ```bash
     # Finish the release. This command will:
@@ -171,7 +171,7 @@ Here are the specific roles and steps for creating a new release:
     git flow release finish v1.2.0
     ```
 
-4.  **Push Changes**: After finishing the release, **Le Dinh Phung** will push the `main` and `develop` branches, along with the new tag, to the remote repository:
+4.  **Push Changes**: After finishing the release, **Mai Minh Tu** will push the `main` and `develop` branches, along with the new tag, to the remote repository:
 
     ```bash
     git push origin main
@@ -179,4 +179,4 @@ Here are the specific roles and steps for creating a new release:
     git push origin --tags
     ```
 
-5.  **Close Issue**: After the release is live and verified on production, **Le Van An** will close the corresponding issue(s).
+5.  **Close Issue**: After the release is live and verified on production, **Mai Minh Tu** will close the corresponding issue(s).
