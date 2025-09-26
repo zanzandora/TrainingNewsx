@@ -1,56 +1,58 @@
 <script setup>
-const articles = [
+import articles from '~/lib/data/mock-data.json'
+
+const links = ref([
   {
-    id: 1,
-    title: 'Getting Started with Nuxt UI',
-    description: 'Learn how to use Nuxt UI in your projects',
-    icon: 'i-mdi-palette',
-    slug: 'getting-started-with-nuxt-ui',
+    label: 'Home',
+    icon: 'i-heroicons-home',
+    to: '/',
   },
   {
-    id: 2,
-    title: 'Vue 3 Composition API',
-    description: 'Master the Composition API in Vue 3',
-    icon: 'i-mdi-vuejs',
-    slug: 'vue-3-composition-api',
+    label: 'Link One',
   },
-]
+])
 </script>
 
 <template>
-  <UContainer>
-    <UPage>
-      <UPageHeader
-        title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-        description="Discover amazing articles about technology, design and more."
-        :ui="{
-          title: 'text-2xl md:text-5xl lg:text-6xl',
-          description: 'text-lg',
-        }"
-      >
-        <template #links>
-          <UButton
-            icon="i-mdi-arrow-right"
-            label="Browse Articles"
-            to="/articles"
-            color="black"
-            variant="solid"
-          />
-        </template>
-      </UPageHeader>
+  <div>
+    <UContainer>
+      <UPage>
+        <!-- Page title section -->
+        <UPageHeader>
+          <div class="py-4">
+            <UContainer>
+              <div class="space-y-1 text-center">
+                <h1 class="mb-2 text-3xl font-bold text-black">
+                  Tuổi Trẻ Online
+                </h1>
 
-      <UPageBody>
-        <UPageGrid>
-          <UPageCard
-            v-for="article in articles"
-            :key="article.id"
-            :title="article.title"
-            :description="article.description"
-            :icon="article.icon"
-            :to="`/articles/${article.slug}`"
+                <UBreadcrumb
+                  :items="links"
+                  class="flex justify-center text-sm"
+                />
+              </div>
+            </UContainer>
+          </div>
+        </UPageHeader>
+
+        <div class="mx-auto mb-16 max-w-7xl">
+          <ArticleCard
+            v-bind="articles[0]"
+            category="Technology"
+            author-avatar="https://github.com/benjamincanac.png"
+            :featured="true"
           />
-        </UPageGrid>
-      </UPageBody>
-    </UPage>
-  </UContainer>
+        </div>
+
+        <!-- Main  -->
+        <UPageBody>
+          <ArticleCard :articles="articles" />
+          <!-- Load More Button  -->
+          <div className="text-center mb-16">
+            <UButton variant="outline" class="px-8 py-2"> Load More </UButton>
+          </div>
+        </UPageBody>
+      </UPage>
+    </UContainer>
+  </div>
 </template>
