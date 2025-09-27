@@ -47,10 +47,6 @@ const links = ref([
         <!-- Main  -->
         <UPageBody>
           <ArticleCard :articles="articles" />
-          <!-- Load More Button  -->
-          <div className="text-center mb-16">
-            <UButton variant="outline" class="px-8 py-2"> Load More </UButton>
-          </div>
         </UPageBody>
       </UPage>
     </UContainer>

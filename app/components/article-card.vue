@@ -3,6 +3,7 @@ import type { Article } from '~/types/article'
 
 const _props = withDefaults(
   defineProps<{
+    id?: number | string
     articles?: Article[]
     image?: string
     category?: string
@@ -51,27 +52,37 @@ const _props = withDefaults(
   </div>
 
   <!-- Nếu có nhiều articles -->
-  <UBlogPosts v-else-if="articles.length">
-    <UBlogPost
-      v-for="(article, index) in articles"
-      :key="index"
-      variant="soft"
-      :title="article.title"
-      :image="article.image"
-      :date="article.pubDate"
-      :badge="{
-        label: 'Tin tức',
-        color: 'secondary',
-        variant: 'solid',
-      }"
-      :authors="[
-        {
-          name: article.author?.name,
-          avatar: { src: article.author?.avarta?.src },
-        },
-      ]"
-    />
-  </UBlogPosts>
+  <div v-else-if="articles.length">
+    <UBlogPosts>
+      <NuxtLink
+        v-for="(article, index) in articles"
+        :key="index"
+        :to="`/article/${article.id}`"
+      >
+        <UBlogPost
+          :title="article.title"
+          :image="article.image"
+          :date="article.pubDate"
+          :badge="{
+            label: 'Tin tức',
+            color: 'secondary',
+            variant: 'solid',
+          }"
+          :authors="[
+            {
+              name: article.author?.name,
+              avatar: { src: article.author?.avarta?.src },
+            },
+          ]"
+          class="h-full transform shadow-md transition-all duration-300 hover:scale-[1.01] hover:shadow-lg"
+        />
+      </NuxtLink>
+    </UBlogPosts>
+
+    <div class="my-8 text-center">
+      <UButton variant="outline" class="px-8 py-2">Load More</UButton>
+    </div>
+  </div>
 
   <!-- Nếu không có gì -->
   <p v-else class="text-gray-500">No articles available.</p>
