@@ -11,7 +11,7 @@ const pathLinks = computed(() => {
   // Tạo mảng breadcrumb với liên kết 'Home' đầu tiên
   const breadcrumbs = [
     {
-      label: 'trang-chu',
+      label: 'trang chủ',
       to: '/',
     },
   ]

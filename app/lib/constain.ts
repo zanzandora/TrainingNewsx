@@ -5,7 +5,7 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 // Giới hạn số lượng mục hiển thị ban đầu
 export const LIMIT_MENU_ITEMS = 8
 
-const baseCategories = [
+export const baseCategories = [
   { label: 'Thế giới', slug: 'the-gioi' },
   { label: 'Kinh doanh', slug: 'kinh-doanh' },
   { label: 'Xe', slug: 'xe' },

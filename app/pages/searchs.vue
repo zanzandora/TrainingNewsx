@@ -6,7 +6,7 @@ import articles from '~/lib/data/mock-data.json'
   <div>
     <UContainer>
       <UPage>
-        <UPageHeader title="Tìm kiếm" />
+        <UPageHeader class="pl-5" title="Tìm kiếm" />
         <!-- Main  -->
         <UPageBody>
           <section class="flex w-full">
