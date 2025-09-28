@@ -1,16 +1,5 @@
 <script setup>
 import articles from '~/lib/data/mock-data.json'
-
-const links = ref([
-  {
-    label: 'Home',
-    icon: 'i-heroicons-home',
-    to: '/',
-  },
-  {
-    label: 'Link One',
-  },
-])
 </script>
 
 <template>
@@ -22,14 +11,9 @@ const links = ref([
           <div class="py-4">
             <UContainer>
               <div class="space-y-1 text-center">
-                <h1 class="mb-2 text-3xl font-bold text-black">
+                <h1 class="mb-2 text-3xl font-bold text-black dark:text-white">
                   Tuổi Trẻ Online
                 </h1>
-
-                <UBreadcrumb
-                  :items="links"
-                  class="flex justify-center text-sm"
-                />
               </div>
             </UContainer>
           </div>

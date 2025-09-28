@@ -36,7 +36,9 @@ const _props = withDefaults(
       class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
     />
     <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
-      <UBadge variant="solid" class="mb-4">{{ category }}</UBadge>
+      <UBadge variant="solid" color="secondary" class="mb-4">
+        {{ category }}
+      </UBadge>
       <h2 class="mb-4 text-3xl font-bold leading-tight">{{ title }}</h2>
 
       <div class="flex items-center space-x-3 text-sm">

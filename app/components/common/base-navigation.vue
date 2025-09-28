@@ -1,87 +1,38 @@
 <script setup lang="ts">
-import type { NavigationMenuItem } from '@nuxt/ui'
+import { LIMIT_MENU_ITEMS, navigationLinks } from '~/lib/constain'
 
 const route = useRoute()
 
-// const items = computed<NavigationMenuItem[]>(() => [
-//   {
-//     label: 'Home',
-//     to: '/',
-//     active: route.path.startsWith('/docs/getting-started'),
-//   },
-//   {
-//     label: 'List',
-//     to: '/article-list',
-//     active: route.path.startsWith('/docs/components'),
-//   },
-//   {
-//     label: 'About',
-//     to: '/about',
-//     active: route.path.startsWith('/docs/components'),
-//   },
-//   {
-//     label: 'Contact',
-//     to: 'https://github.com/nuxt/ui/releases',
-//     active: route.path.startsWith('/docs/components'),
-//   },
-// ])
+// Tạo các liên kết breadcrumb động
+const pathLinks = computed(() => {
+  // Lấy đường dẫn hiện tại và chia thành các đoạn
+  const segments = route.path.split('/').filter(Boolean)
 
-const cats = computed<NavigationMenuItem[]>(() => [
-  {
-    label: 'Home',
-    to: '/',
-    active: route.path.startsWith('/home'),
-  },
-  {
-    label: 'Thời sự',
-    to: '/thoisu',
-    active: route.path.startsWith('/thoisu'),
-  },
-  {
-    label: 'Thời sự',
-    to: '/about',
-    active: route.path.startsWith('/docs/components'),
-  },
-  {
-    label: 'Thời sự',
-    to: 'https://github.com/nuxt/ui/releases',
-    active: route.path.startsWith('/docs/components'),
-  },
-  {
-    label: 'Thời sự',
-    to: 'https://github.com/nuxt/ui/releases',
-    active: route.path.startsWith('/docs/components'),
-  },
-  {
-    label: 'Thời sự',
-    to: 'https://github.com/nuxt/ui/releases',
-    active: route.path.startsWith('/docs/components'),
-  },
-  {
-    label: 'Thời sự',
-    to: 'https://github.com/nuxt/ui/releases',
-    active: route.path.startsWith('/docs/components'),
-  },
-  {
-    label: 'Thời sự',
-    to: 'https://github.com/nuxt/ui/releases',
-    active: route.path.startsWith('/docs/components'),
-  },
-  {
-    label: 'Thời sự',
-    to: 'https://github.com/nuxt/ui/releases',
-    active: route.path.startsWith('/docs/components'),
-  },
-])
+  // Tạo mảng breadcrumb với liên kết 'Home' đầu tiên
+  const breadcrumbs = [
+    {
+      label: 'trang-chu',
+      to: '/',
+    },
+  ]
 
-// Giới hạn số lượng mục hiển thị ban đầu
-const limit = 5
+  let currentPath = ''
+  segments.forEach((segment) => {
+    currentPath += `/${segment}`
+    breadcrumbs.push({
+      label: segment,
+      to: currentPath,
+    })
+  })
+
+  return breadcrumbs
+})
 
 // Lấy các mục hiển thị ban đầu
-const visibleCats = computed(() => cats.value.slice(0, limit))
+const visibleCats = computed(() => navigationLinks.slice(0, LIMIT_MENU_ITEMS))
 
 // Lấy các mục còn lại để hiển thị trong Popover
-const remainingCats = computed(() => cats.value.slice(limit))
+const remainingCats = computed(() => navigationLinks.slice(LIMIT_MENU_ITEMS))
 </script>
 
 <template>
@@ -97,6 +48,7 @@ const remainingCats = computed(() => cats.value.slice(limit))
     </template>
 
     <UNavigationMenu :items="visibleCats" class="text-xl" />
+
     <template #right>
       <UInput
         placeholder="Search..."
@@ -104,15 +56,27 @@ const remainingCats = computed(() => cats.value.slice(limit))
       />
       <UColorModeButton />
     </template>
+
+    <!-- Breadcrumb -->
+    <template #bottom>
+      <UContainer>
+        <UBreadcrumb :items="pathLinks" class="mt-2 text-sm" />
+      </UContainer>
+    </template>
+
     <UPopover v-if="remainingCats.length" class="ml-4">
       <UButton
         color="secondary"
-        variant="ghost"
+        variant="link"
         icon="i-heroicons-arrow-down-solid"
+        aria-label="More categories"
       />
-
-      <template #panel>
-        <UVerticalNavigation :links="remainingCats" class="w-40 p-4" />
+      <template #content>
+        <UNavigationMenu
+          :items="remainingCats"
+          orientation="vertical"
+          class="mx-2 p-2"
+        />
       </template>
     </UPopover>
   </UHeader>
