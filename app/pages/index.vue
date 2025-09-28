@@ -22,7 +22,7 @@ const links = ref([
           <div class="py-4">
             <UContainer>
               <div class="space-y-1 text-center">
-                <h1 class="mb-2 text-3xl font-bold text-black">
+                <h1 class="mb-2 text-3xl font-bold text-white">
                   Tuổi Trẻ Online
                 </h1>
 

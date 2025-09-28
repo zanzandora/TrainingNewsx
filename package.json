@@ -25,17 +25,19 @@
     "mongoose": "^8.18.2",
     "nuxt": "^4.1.2",
     "tailwindcss": "^4.1.13",
-    "typescript": "^5.9.2",
     "vue": "^3.5.21",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^5.3.0",
+    "@iconify-json/heroicons": "^1.2.3",
     "@iconify-json/lucide": "^1.2.68",
+    "@iconify-json/ph": "^1.2.2",
     "@types/node": "^24.5.2",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.6",
     "prettier": "^3.6.2",
-    "prettier-plugin-tailwindcss": "^0.6.14"
+    "prettier-plugin-tailwindcss": "^0.6.14",
+    "typescript": "^5.9.2"
   }
 }

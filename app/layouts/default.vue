@@ -5,5 +5,6 @@
       <slot />
     </main>
     <CommonFooter />
+    <SearchModal />
   </div>
 </template>

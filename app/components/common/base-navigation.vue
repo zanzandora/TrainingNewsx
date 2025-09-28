@@ -2,6 +2,8 @@
 import type { NavigationMenuItem } from '@nuxt/ui'
 
 const route = useRoute()
+const { metaSymbol } = useShortcuts()
+const { toggle } = useSearchModal()
 
 const items = computed<NavigationMenuItem[]>(() => [
   {
@@ -10,8 +12,8 @@ const items = computed<NavigationMenuItem[]>(() => [
     active: route.path.startsWith('/docs/getting-started'),
   },
   {
-    label: 'Categorise',
-    to: '/categorise',
+    label: 'Categories',
+    to: '/categories',
     active: route.path.startsWith('/docs/components'),
   },
   {
@@ -41,6 +43,16 @@ const items = computed<NavigationMenuItem[]>(() => [
 
     <UNavigationMenu :items="items" class="text-xl" />
     <template #right>
+      <UTooltip text="Search" :shortcuts="[metaSymbol, 'k']">
+        <UButton
+          icon="i-ph-magnifying-glass-bold"
+          variant="ghost"
+          square
+          @click="toggle"
+        >
+          <span class="sr-only">Search</span>
+        </UButton>
+      </UTooltip>
       <UColorModeButton />
     </template>
   </UHeader>
