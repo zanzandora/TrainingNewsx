@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import articles from '~/lib/data/mock-data.json'
 </script>
 
@@ -20,12 +20,7 @@ import articles from '~/lib/data/mock-data.json'
         </UPageHeader>
 
         <div class="mx-auto mb-16 max-w-7xl">
-          <ArticleCard
-            v-bind="articles[0]"
-            category="Technology"
-            author-avatar="https://github.com/benjamincanac.png"
-            :featured="true"
-          />
+          <ArticleCard :post="articles[0]" :featured="true" />
         </div>
 
         <!-- Main  -->

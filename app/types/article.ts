@@ -13,3 +13,31 @@ export type Article = {
   pubDate?: string
   featured?: boolean
 }
+
+export type AuthorAvatar = {
+  src: string
+}
+
+export type PostAuthor = {
+  name: string
+  avatar: AuthorAvatar
+}
+
+export type Post = {
+  id: string
+  v?: number | null
+  author: PostAuthor
+  title: string
+  slug: string
+  link: string
+  pubDate: string
+  description: string
+  image?: string | null
+  content: string
+  categories: string[]
+  published: boolean
+  createdAt: string
+  updatedAt: string
+  source?: string | null
+  tags: string[]
+}

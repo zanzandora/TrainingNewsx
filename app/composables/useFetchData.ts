@@ -12,7 +12,7 @@ type FetchDataOptions<T> = {
   /** Debounce time in milliseconds for the fetch request */
   debounce?: number
   /** Enable caching of fetched data */
-  cache?: boolean
+  enableCache?: boolean
   /** Custom cache key for storing data */
   cacheKey?: string
   /** Cache time-to-live in milliseconds */
@@ -114,7 +114,7 @@ function generateCacheKey(
  * const { data: posts } = useFetchData<Post[]>('/api/users/:userId/posts', {
  *   params: { userId: 123 },
  *   query: { page: 1, limit: 10 },
- *   cache: true,
+ *   enableCache: true,
  *   cacheTTL: 300000 // 5 minutes
  * })
  *
@@ -136,7 +136,7 @@ export function useFetchData<T = any>(
   const {
     // VueUse specific options
     debounce = 0,
-    cache = false,
+    enableCache = false,
     cacheKey,
     cacheTTL = 5 * 60 * 1000, // 5 minutes default
     immediate = true,
@@ -237,7 +237,7 @@ export function useFetchData<T = any>(
 
   // Check if cache is valid based on TTL
   const isCacheValid = computed(() => {
-    if (!cache || !cacheStorage.value.timestamp) return false
+    if (!enableCache || !cacheStorage.value.timestamp) return false
     return Date.now() < cacheStorage.value.expires
   })
 
@@ -257,7 +257,7 @@ export function useFetchData<T = any>(
    * @param responseData - The data to cache
    */
   const saveToCache = (responseData: T) => {
-    if (cache) {
+    if (enableCache) {
       cacheStorage.value = {
         data: responseData,
         timestamp: Date.now(),
@@ -311,7 +311,7 @@ export function useFetchData<T = any>(
     }
 
     // Check cache first and return if valid
-    if (cache) {
+    if (enableCache) {
       const cachedData = getFromCache()
       if (cachedData) {
         data.value = cachedData
@@ -420,7 +420,7 @@ export function useFetchData<T = any>(
         statusCode.value = response.value?.status ?? null
 
         // Save to cache if successful and caching is enabled
-        if (cache && transformedData) {
+        if (enableCache && transformedData) {
           saveToCache(transformedData)
         }
 
@@ -467,7 +467,7 @@ export function useFetchData<T = any>(
    * Refreshes the data by clearing cache and re-executing the request
    */
   const refresh = async () => {
-    if (cache) {
+    if (enableCache) {
       clearCache()
     }
     return execute()

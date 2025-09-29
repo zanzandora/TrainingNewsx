@@ -18,6 +18,8 @@ export default withNuxt(
         'prettier/prettier': 'off',
         'antfu/format': 'off',
 
+        'ts/no-use-before-define': 'off',
+
         // Giữ lại rules chất lượng code
         'vue/singleline-html-element-content-newline': 'off',
         'ts/no-redeclare': 'off',

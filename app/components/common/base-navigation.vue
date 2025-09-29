@@ -1,38 +1,35 @@
 <script setup lang="ts">
-import { LIMIT_MENU_ITEMS, navigationLinks } from '~/lib/constain'
+import type { Category } from '~/types/category'
 
-const route = useRoute()
+import { LIMIT_MENU_ITEMS } from '~/lib/constain'
 
-// Tạo các liên kết breadcrumb động
-const pathLinks = computed(() => {
-  // Lấy đường dẫn hiện tại và chia thành các đoạn
-  const segments = route.path.split('/').filter(Boolean)
+const { data: navigationLinks, loading } = useFetchData<Category[]>(
+  '/category',
+  {
+    immediate: true,
+  },
+)
 
-  // Tạo mảng breadcrumb với liên kết 'Home' đầu tiên
-  const breadcrumbs = [
-    {
-      label: 'trang chủ',
-      to: '/',
-    },
-  ]
-
-  let currentPath = ''
-  segments.forEach((segment) => {
-    currentPath += `/${segment}`
-    breadcrumbs.push({
-      label: segment,
-      to: currentPath,
-    })
-  })
-
-  return breadcrumbs
+// Map sang định dạng menu item
+const categories = computed(() => {
+  if (!navigationLinks.value) return []
+  return navigationLinks.value
+    .map((cat) => ({
+      label: cat.name,
+      slug: cat.slug,
+      to: `/${cat.slug}`,
+      icon: cat.slug === 'trang-chu' ? 'i-heroicons-home' : undefined,
+    }))
+    .sort((a, b) =>
+      a.slug === 'trang-chu' ? -1 : b.slug === 'trang-chu' ? 1 : 0,
+    )
 })
 
 // Lấy các mục hiển thị ban đầu
-const visibleCats = computed(() => navigationLinks.slice(0, LIMIT_MENU_ITEMS))
+const visibleCats = computed(() => categories.value.slice(0, LIMIT_MENU_ITEMS))
 
 // Lấy các mục còn lại để hiển thị trong Popover
-const remainingCats = computed(() => navigationLinks.slice(LIMIT_MENU_ITEMS))
+const remainingCats = computed(() => categories.value.slice(LIMIT_MENU_ITEMS))
 </script>
 
 <template>
@@ -47,6 +44,10 @@ const remainingCats = computed(() => navigationLinks.slice(LIMIT_MENU_ITEMS))
       <NuxtImg width="56px" src="/icon-green.png" format="webp" alt="" />
     </template>
 
+    <template v-if="loading">
+      <USkeleton v-for="i in 5" :key="i" class="mx-6 h-6 w-20 rounded-md" />
+    </template>
+
     <UNavigationMenu :items="visibleCats" class="text-xl" />
 
     <template #right>
@@ -55,13 +56,6 @@ const remainingCats = computed(() => navigationLinks.slice(LIMIT_MENU_ITEMS))
         icon="i-heroicons-magnifying-glass-20-solid"
       />
       <UColorModeButton />
-    </template>
-
-    <!-- Breadcrumb -->
-    <template #bottom>
-      <UContainer>
-        <UBreadcrumb :items="pathLinks" class="mt-2 text-sm" />
-      </UContainer>
     </template>
 
     <UPopover v-if="remainingCats.length" class="ml-4">
