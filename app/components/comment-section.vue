@@ -11,7 +11,7 @@ type Comment = {
 }
 
 // const props = defineProps<{
-//   postId: string
+//   newspaperId: string
 // }>()
 
 const comments = ref<Comment[]>([])
@@ -29,6 +29,15 @@ const getInitials = (name: string) => {
     .toUpperCase()
     .slice(0, 2)
 }
+
+// Generate color base on author's name
+const authorBackgroundColor = authorName.value
+  ? `#${(authorName.value as string)
+      .split('')
+      .reduce((acc: number, char: string) => acc + char.charCodeAt(0), 0)
+      .toString(16)
+      .slice(-6)}`
+  : '#4F46E5'
 
 // Format date to relative time
 const formatDate = (date: Date) => {
@@ -113,13 +122,7 @@ const cancelReply = (commentId: number) => {
           <div
             class="bg-primary flex h-10 w-10 items-center justify-center rounded-full text-white"
             :style="{
-              backgroundColor: authorName
-                ? `#${authorName
-                    .split('')
-                    .reduce((acc, char) => acc + char.charCodeAt(0), 0)
-                    .toString(16)
-                    .slice(-6)}`
-                : '#4F46E5',
+              backgroundColor: authorBackgroundColor,
             }"
           >
             {{ authorName ? getInitials(authorName) : '?' }}
