@@ -117,6 +117,8 @@ watch(
       </div>
 
       <div class="mt-8 flex flex-col gap-4" v-html="post?.content" />
+
+      <CommentSection :post-id="slug as string" />
     </UContainer>
   </div>
 </template>
