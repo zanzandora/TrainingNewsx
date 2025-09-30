@@ -63,8 +63,8 @@ watch(
         </div>
       </nav>
 
-      <div class="flex flex-col gap-8 lg:flex-row">
-        <div class="flex flex-col gap-8 lg:w-3/5">
+      <div class="flex w-full flex-col gap-8 lg:flex-row">
+        <div class="flex flex-col gap-8">
           <!-- Back Button -->
           <div class="flex items-center gap-4">
             <UButton variant="outline" color="neutral" @click="$router.back()">
@@ -75,7 +75,7 @@ watch(
 
           <!-- Article Title -->
           <h1
-            class="text-3xl font-bold leading-tight text-gray-900 md:text-4xl xl:text-5xl dark:text-white"
+            class="w-full text-3xl font-bold leading-tight text-gray-900 md:text-4xl xl:text-5xl dark:text-white"
           >
             {{ post?.title || 'Đang tải bài viết...' }}
           </h1>
@@ -113,15 +113,6 @@ watch(
               {{ post?.description || 'Mô tả bài viết đang được tải...' }}
             </p>
           </div>
-        </div>
-
-        <div class="hidden w-2/5 lg:block">
-          <NuxtImg
-            :src="post?.image ?? '/placeholder.svg'"
-            :alt="post?.author.name"
-            class="h-auto w-full rounded-2xl object-cover shadow-lg"
-            sizes="sm:500px md:600px lg:800px"
-          />
         </div>
       </div>
 

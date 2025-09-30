@@ -34,9 +34,9 @@ const displayTitle = computed(() => categoryNames[slug] || title || 'Danh mục'
 
 // Set page title and meta
 useSeoMeta({
-  title: `${displayTitle.value} - Training News`,
+  title: `${displayTitle.value} - Tin tức `,
   description: `Đọc các bài viết mới nhất về ${displayTitle.value.toLowerCase()}. Cập nhật tin tức nóng hổi và đáng chú ý nhất.`,
-  ogTitle: `${displayTitle.value} - Training News`,
+  ogTitle: `${displayTitle.value} - Tin tức`,
   ogDescription: `Tin tức ${displayTitle.value.toLowerCase()} mới nhất và đáng tin cậy`,
 })
 
