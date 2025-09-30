@@ -16,6 +16,30 @@ const slug = Array.isArray(route.params.slug)
 const title =
   (route.query.t as string) || slug.replace(/-/g, ' ').toLocaleUpperCase()
 
+// Create a more friendly category name mapping
+const categoryNames: Record<string, string> = {
+  'the-thao': 'Thể thao',
+  'thoi-su': 'Thời sự',
+  'the-gioi': 'Thế giới',
+  'kinh-te': 'Kinh tế',
+  'giao-duc': 'Giáo dục',
+  'cong-nghe': 'Công nghệ',
+  'suc-khoe': 'Sức khỏe',
+  'van-hoa': 'Văn hóa',
+  'du-lich': 'Du lịch',
+  'giai-tri': 'Giải trí',
+}
+
+const displayTitle = computed(() => categoryNames[slug] || title || 'Danh mục')
+
+// Set page title and meta
+useSeoMeta({
+  title: `${displayTitle.value} - Training News`,
+  description: `Đọc các bài viết mới nhất về ${displayTitle.value.toLowerCase()}. Cập nhật tin tức nóng hổi và đáng chú ý nhất.`,
+  ogTitle: `${displayTitle.value} - Training News`,
+  ogDescription: `Tin tức ${displayTitle.value.toLowerCase()} mới nhất và đáng tin cậy`,
+})
+
 // Debug logs
 console.warn('Cat page slug:', slug)
 console.warn('Cat page query:', query.value)
@@ -73,7 +97,20 @@ useInfiniteScroll(
 <template>
   <UContainer>
     <UPage>
-      <UPageHeader :title="title" />
+      <UPageHeader>
+        <div class="py-6">
+          <div class="space-y-3 text-center">
+            <h1
+              class="text-3xl font-bold text-gray-900 md:text-4xl dark:text-white"
+            >
+              {{ displayTitle }}
+            </h1>
+            <p class="text-base text-gray-600 md:text-lg dark:text-gray-300">
+              Khám phá các tin tức nóng hổi và cập nhật mới nhất
+            </p>
+          </div>
+        </div>
+      </UPageHeader>
       <UPageBody>
         <section class="flex w-full">
           <div class="flex-1 space-y-4">

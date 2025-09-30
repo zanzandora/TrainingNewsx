@@ -12,30 +12,107 @@ const { data: post } = useFetchData<Post>('/post/:slug', {
   params: { slug: slug.value as string },
   immediate: true,
 })
+
+// Set dynamic SEO meta tags based on post data
+watch(
+  post,
+  (newPost) => {
+    console.log('🚀 ~ post:', post.value)
+    if (newPost) {
+      useSeoMeta({
+        title: `${newPost.title} - Training News`,
+        description:
+          newPost.description ||
+          `Đọc bài viết "${newPost.title}" trên Training News. Tin tức mới nhất và đáng tin cậy.`,
+        ogTitle: newPost.title,
+        ogDescription:
+          newPost.description ||
+          `Đọc bài viết "${newPost.title}" trên Training News`,
+        ogImage: newPost.image,
+        twitterCard: 'summary_large_image',
+        twitterTitle: newPost.title,
+        twitterDescription: newPost.description,
+        twitterImage: newPost.image,
+      })
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
   <div class="mb-16 py-8">
     <UContainer>
+      <!-- Breadcrumb Navigation -->
+      <nav class="mb-8" aria-label="Breadcrumb">
+        <div
+          class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
+        >
+          <UButton variant="ghost" color="neutral" @click="$router.push('/')">
+            <UIcon name="i-heroicons-home" class="h-4 w-4" />
+            Trang chủ
+          </UButton>
+          <UIcon name="i-heroicons-chevron-right" class="h-4 w-4" />
+          <UButton variant="ghost" color="neutral" @click="$router.back()">
+            {{ post?.categories[0]?.name || 'Tin tức' }}
+          </UButton>
+          <UIcon name="i-heroicons-chevron-right" class="h-4 w-4" />
+          <span class="text-primary font-medium">{{
+            post?.title || 'Đang tải...'
+          }}</span>
+        </div>
+      </nav>
+
       <div class="flex flex-col gap-8 lg:flex-row">
         <div class="flex flex-col gap-8 lg:w-3/5">
-          <h1 class="text-3xl font-bold md:text-4xl xl:text-5xl">
-            {{ post?.title }}
-          </h1>
-
-          <div class="flex items-center gap-2 text-sm text-gray-400">
-            <span>Viết bởi</span>
-            <UButton variant="link" color="primary">
-              {{ post?.author.name }}
+          <!-- Back Button -->
+          <div class="flex items-center gap-4">
+            <UButton variant="outline" color="neutral" @click="$router.back()">
+              <UIcon name="i-heroicons-arrow-left" class="h-4 w-4" />
+              Trở lại
             </UButton>
-            <span>on</span>
-            <UButton variant="link" color="primary"> Thời sự </UButton>
-            <span>{{ dayjs(post?.pubDate).format('DD/MM/YYYY') }}</span>
           </div>
 
-          <p class="text-muted font-medium leading-relaxed">
-            {{ post?.description }}
-          </p>
+          <!-- Article Title -->
+          <h1
+            class="text-3xl font-bold leading-tight text-gray-900 md:text-4xl xl:text-5xl dark:text-white"
+          >
+            {{ post?.title || 'Đang tải bài viết...' }}
+          </h1>
+
+          <!-- Article Meta Information -->
+          <div
+            class="flex flex-wrap items-center gap-2 text-sm text-gray-500 dark:text-gray-400"
+          >
+            <span>Viết bởi</span>
+            <UButton variant="link" color="primary" size="sm">
+              <UIcon name="i-heroicons-user-circle" class="h-4 w-4" />
+              {{ post?.author.name || 'Tác giả' }}
+            </UButton>
+            <span>•</span>
+            <UButton variant="link" color="primary" size="sm">
+              <UIcon name="i-heroicons-tag" class="h-4 w-4" />
+              Thời sự
+            </UButton>
+            <span>•</span>
+            <div class="flex items-center gap-1">
+              <UIcon name="i-heroicons-calendar-days" class="h-4 w-4" />
+              <span>{{
+                post?.pubDate
+                  ? dayjs(post.pubDate).format('DD/MM/YYYY')
+                  : 'Đang cập nhật'
+              }}</span>
+            </div>
+          </div>
+
+          <!-- Article Description -->
+          <div class="border-primary border-l-4 pl-4">
+            <p
+              class="text-lg font-medium leading-relaxed text-gray-700 dark:text-gray-300"
+            >
+              {{ post?.description || 'Mô tả bài viết đang được tải...' }}
+            </p>
+          </div>
         </div>
 
         <div class="hidden w-2/5 lg:block">

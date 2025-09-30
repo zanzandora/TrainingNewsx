@@ -34,10 +34,16 @@ export type Post = {
   description: string
   image?: string | null
   content: string
-  categories: string[]
   published: boolean
   createdAt: string
   updatedAt: string
   source?: string | null
   tags: string[]
+  categories: [
+    {
+      id: string
+      name: string
+      slug: string
+    },
+  ]
 }
