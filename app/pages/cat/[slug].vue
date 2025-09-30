@@ -15,6 +15,11 @@ const slug = Array.isArray(route.params.slug)
   : (route.params.slug ?? 'trang-chu')
 const title =
   (route.query.t as string) || slug.replace(/-/g, ' ').toLocaleUpperCase()
+
+// Debug logs
+console.warn('Cat page slug:', slug)
+console.warn('Cat page query:', query.value)
+
 const { data, execute, loading, error } = useFetchData<PostsByCategoryResponse>(
   '/post/category/:slug',
   {
@@ -30,6 +35,7 @@ watch(data, () => {
       (newPost) =>
         !allPosts.value.some((existingPost) => existingPost.id === newPost.id),
     )
+
     allPosts.value.push(...newPosts)
   }
 })
@@ -39,15 +45,27 @@ const posts = computed(() => allPosts.value)
 useInfiniteScroll(
   window,
   async () => {
-    if (loading.value) return
-    if (!data.value?.pagination?.hasNext) return
+    if (loading.value) {
+      return
+    }
+    if (!data.value?.pagination?.hasNext) {
+      return
+    }
+
     page.value++
 
     await execute()
   },
   {
     distance: 100,
-    canLoadMore: () => data.value?.pagination?.hasNext === true,
+    canLoadMore: () => {
+      const canLoad = data.value?.pagination?.hasNext === true && !loading.value
+      console.warn('Can load more?', canLoad, {
+        hasNext: data.value?.pagination?.hasNext,
+        loading: loading.value,
+      })
+      return canLoad
+    },
   },
 )
 </script>
@@ -58,10 +76,6 @@ useInfiniteScroll(
       <UPageHeader :title="title" />
       <UPageBody>
         <section class="flex w-full">
-          <!-- <div class="hidden w-full lg:block lg:w-1/5">
-            <LazySideMenu />
-          </div> -->
-
           <div class="flex-1 space-y-4">
             <!-- Error -->
             <div v-if="error" class="text-red-500">

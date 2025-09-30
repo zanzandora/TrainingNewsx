@@ -24,18 +24,12 @@ const { data: post } = useFetchData<Post>('/post/:slug', {
           </h1>
 
           <div class="flex items-center gap-2 text-sm text-gray-400">
-            <span>Written by</span>
-            <UButton
-              :to="`/author/${post?.author.name}`"
-              variant="link"
-              color="primary"
-            >
+            <span>Viết bởi</span>
+            <UButton variant="link" color="primary">
               {{ post?.author.name }}
             </UButton>
             <span>on</span>
-            <UButton to="`/category/regerg`" variant="link" color="primary">
-              Thời sự
-            </UButton>
+            <UButton variant="link" color="primary"> Thời sự </UButton>
             <span>{{ dayjs(post?.pubDate).format('DD/MM/YYYY') }}</span>
           </div>
 
