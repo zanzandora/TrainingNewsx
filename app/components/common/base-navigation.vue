@@ -9,7 +9,15 @@ const { data: navigationLinks, loading } = useFetchData<Category[]>(
     immediate: true,
   },
 )
-// const router = useRouter()
+const router = useRouter()
+const keyword = ref('')
+
+const keyupHandler = (e: KeyboardEvent) => {
+  if (e.key !== 'Enter') return
+  const q = keyword.value.trim()
+  if (!q) return
+  router.replace({ path: '/searchs', query: { q } })
+}
 // Map sang định dạng menu item
 const categories = computed(() => {
   if (!navigationLinks.value) return []
@@ -56,8 +64,10 @@ const remainingCats = computed(() => categories.value.slice(LIMIT_MENU_ITEMS))
 
     <template #right>
       <UInput
+        v-model="keyword"
         placeholder="Search..."
         icon="i-heroicons-magnifying-glass-20-solid"
+        @keyup="keyupHandler"
       />
       <UColorModeButton />
     </template>

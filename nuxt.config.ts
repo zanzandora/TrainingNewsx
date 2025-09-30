@@ -32,11 +32,11 @@ export default defineNuxtConfig({
       '@tailwindcss/postcss': {},
     },
   },
-
   // *Runtime config
   // !không nên dùng trực tiếp process.env trong nuxt.config.ts/js
   // !Nếu lỡ dùng trong config, hoặc trong code có thể chạy client-side, thì biến env đó sẽ không tồn tại trên browser → gây bug runtime.
   runtimeConfig: {
+    internalApiUrl: 'http://news-be-api.railway.internal',
     public: {
       baseUrlApi: 'https://news-be-api-production.up.railway.app', // sẽ inject từ ENV
     },

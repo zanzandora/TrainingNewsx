@@ -130,7 +130,13 @@ export function useFetchData<T = any>(
 ): FetchDataReturn<T> {
   // Get runtime configuration for base API URL
   const config = useRuntimeConfig()
-  const BASE_URL_API = config.public.baseUrlApi || ''
+  // const BASE_URL_API = config.public.baseUrlApi || ''
+  const BASE_URL_API =
+    import.meta.server && config.internalApiUrl
+      ? config.internalApiUrl
+      : config.public.baseUrlApi
+
+  console.log('🚀 ~ useFetchData ~ BASE_URL_API:', BASE_URL_API)
 
   // Destructure options with default values
   const {

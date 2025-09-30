@@ -3,6 +3,8 @@ import { ref } from 'vue'
 
 import { baseCategories } from '~/lib/constain'
 
+const emit = defineEmits(['categoryChange', 'sortChange'])
+
 // Quản lý trạng thái bộ lọc sắp xếp
 const sortValue = ref('newest')
 const sortOptions = [
@@ -10,12 +12,12 @@ const sortOptions = [
   { label: 'Cũ nhất', value: 'oldest' },
 ]
 
-// thêm state để lọc theo loại
-const filterByValue = ref('news')
-const filterByOptions = [
-  { label: 'Tin tức', value: 'news' },
-  { label: 'Tác giả', value: 'author' },
-]
+// // thêm state để lọc theo loại
+// const filterByValue = ref('news')
+// const filterByOptions = [
+//   { label: 'Tin tức', value: 'news' },
+//   { label: 'Tác giả', value: 'author' },
+// ]
 
 // thêm state cho chuyên mục
 const categoriesWithAll = [
@@ -23,6 +25,11 @@ const categoriesWithAll = [
   ...baseCategories,
 ]
 const selectedCategory = ref<string | undefined>(categoriesWithAll[0]?.slug)
+const onChange = () => {
+  emit('categoryChange', selectedCategory.value)
+  emit('sortChange', sortValue.value)
+  // emit('filterByChange', filterByValue.value)
+}
 </script>
 
 <template>
@@ -44,10 +51,11 @@ const selectedCategory = ref<string | undefined>(categoriesWithAll[0]?.slug)
           :clearable="true"
           placeholder="Chọn chuyên mục"
           class="w-full max-w-xs text-sm"
+          @change="onChange"
         />
       </div>
       <!-- Lọc theo đối tượng-->
-      <div class="mt-6">
+      <!-- <div class="mt-6">
         <label class="mb-2 block text-sm font-medium">Tìm theo</label>
         <USelect
           v-model="filterByValue"
@@ -57,8 +65,9 @@ const selectedCategory = ref<string | undefined>(categoriesWithAll[0]?.slug)
           :clearable="false"
           placeholder="Chọn loại"
           class="w-full max-w-xs text-sm"
+          @change="onChange"
         />
-      </div>
+      </div> -->
     </div>
     <!-- Lọc theo cũ/mới nhất-->
     <div class="mt-6">
@@ -67,6 +76,7 @@ const selectedCategory = ref<string | undefined>(categoriesWithAll[0]?.slug)
         v-model="sortValue"
         :items="sortOptions"
         class="flex flex-col gap-2 text-sm"
+        @change="onChange"
       />
     </div>
   </div>
