@@ -9,20 +9,24 @@ const { data: navigationLinks, loading } = useFetchData<Category[]>(
     immediate: true,
   },
 )
-
+// const router = useRouter()
 // Map sang định dạng menu item
 const categories = computed(() => {
   if (!navigationLinks.value) return []
+  // Helper function to sort categories, putting 'trang-chu' first
+  function sortCategories(a: { slug: string }, b: { slug: string }) {
+    if (a.slug === 'trang-chu') return -1
+    if (b.slug === 'trang-chu') return 1
+    return 0
+  }
   return navigationLinks.value
     .map((cat) => ({
       label: cat.name,
       slug: cat.slug,
-      to: `/${cat.slug}`,
+      to: cat.slug === 'trang-chu' ? '/' : `/cat/${cat.slug}?t=${cat.name}`,
       icon: cat.slug === 'trang-chu' ? 'i-heroicons-home' : undefined,
     }))
-    .sort((a, b) =>
-      a.slug === 'trang-chu' ? -1 : b.slug === 'trang-chu' ? 1 : 0,
-    )
+    .sort(sortCategories)
 })
 
 // Lấy các mục hiển thị ban đầu

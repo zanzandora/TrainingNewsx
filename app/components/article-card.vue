@@ -50,7 +50,7 @@ const articles = computed(() => props.articles ?? [])
       <NuxtLink
         v-for="article in articles"
         :key="article.id"
-        :to="`/${article.slug}`"
+        :to="`/d/${article.slug}`"
       >
         <UBlogPost
           :title="article.title"

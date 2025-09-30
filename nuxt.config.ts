@@ -37,7 +37,7 @@ export default defineNuxtConfig({
   // !Nếu lỡ dùng trong config, hoặc trong code có thể chạy client-side, thì biến env đó sẽ không tồn tại trên browser → gây bug runtime.
   runtimeConfig: {
     public: {
-      baseUrlApi: '', // sẽ inject từ ENV
+      baseUrlApi: 'https://news-be-api-production.up.railway.app', // sẽ inject từ ENV
     },
   },
 

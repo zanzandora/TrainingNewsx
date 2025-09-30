@@ -5,16 +5,20 @@ import type { Post } from '~/types/article'
 const page = ref(1)
 const limit = 9
 const allPosts = ref<Post[]>([])
-
+const route = useRoute()
 const query = computed(() => ({
   limit,
   page: page.value,
 }))
-
+const slug = Array.isArray(route.params.slug)
+  ? (route.params.slug[0] ?? 'trang-chu')
+  : (route.params.slug ?? 'trang-chu')
+const title =
+  (route.query.t as string) || slug.replace(/-/g, ' ').toLocaleUpperCase()
 const { data, execute, loading, error } = useFetchData<PostsByCategoryResponse>(
   '/post/category/:slug',
   {
-    params: { slug: 'thoi-su' },
+    params: { slug },
     query,
     immediate: true,
   },
@@ -51,12 +55,12 @@ useInfiniteScroll(
 <template>
   <UContainer>
     <UPage>
-      <UPageHeader title="Thời sự" />
+      <UPageHeader :title="title" />
       <UPageBody>
         <section class="flex w-full">
-          <div class="hidden w-full lg:block lg:w-1/5">
+          <!-- <div class="hidden w-full lg:block lg:w-1/5">
             <LazySideMenu />
-          </div>
+          </div> -->
 
           <div class="flex-1 space-y-4">
             <!-- Error -->
