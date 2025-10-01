@@ -20,7 +20,7 @@ const query = computed(() => ({
   page: page.value,
 }))
 
-const { data, execute, loading } = useFetchData<PostsByCategoryResponse>(
+const { data, execute, loading, error } = useFetchData<PostsByCategoryResponse>(
   '/post/category/:slug',
   {
     params: { slug: 'trang-chu' },
@@ -52,7 +52,8 @@ useInfiniteScroll(
   },
   {
     distance: 100,
-    canLoadMore: () => data.value?.pagination?.hasNext === true,
+    canLoadMore: () =>
+      data.value?.pagination?.hasNext === true && !loading.value,
   },
 )
 </script>
@@ -79,14 +80,65 @@ useInfiniteScroll(
           </div>
         </UPageHeader>
 
-        <div class="mx-auto mb-16 max-w-7xl">
-          <ArticleCard :post="posts[0]" :featured="true" />
+        <!-- Error -->
+        <div v-if="error" class="py-4 text-center text-red-500">
+          Có lỗi xảy ra: {{ error.message }}
         </div>
 
-        <!-- Main  -->
-        <UPageBody>
-          <ArticleCard :articles="posts" />
-        </UPageBody>
+        <!-- loading lần đầu -->
+        <template v-if="loading && posts.length === 0">
+          <div class="mx-auto mb-16 max-w-7xl">
+            <USkeleton class="h-96 w-full rounded-lg" />
+          </div>
+
+          <UPageBody>
+            <div
+              class="flex flex-col gap-8 sm:grid sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-16"
+            >
+              <USkeleton
+                v-for="i in 6"
+                :key="i"
+                class="h-96 w-full rounded-lg"
+              />
+            </div>
+          </UPageBody>
+        </template>
+
+        <!-- có bài viết -->
+        <template v-else>
+          <!-- Featured post -->
+          <div v-if="posts.length > 0" class="mx-auto mb-16 max-w-7xl">
+            <ArticleCard :post="posts[0]" :featured="true" />
+          </div>
+
+          <!-- Main content -->
+          <UPageBody>
+            <KeepAlive>
+              <ArticleCard :articles="posts" />
+            </KeepAlive>
+
+            <!-- skeleton load thêm -->
+            <div
+              v-if="loading && posts.length > 0"
+              class="mt-8 flex flex-col gap-8 sm:grid sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-16"
+            >
+              <USkeleton
+                v-for="i in 6"
+                :key="i"
+                class="h-96 w-full rounded-lg"
+              />
+            </div>
+
+            <div
+              v-else-if="
+                !loading && posts.length > 0 && !data?.pagination?.hasNext
+              "
+              class="mt-6 text-center text-gray-500"
+            >
+              Bạn đã xem hết tất cả bài viết.
+            </div>
+          </UPageBody>
+        </template>
       </UPage>
     </UContainer>
   </div>
