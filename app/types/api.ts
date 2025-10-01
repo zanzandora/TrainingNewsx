@@ -7,3 +7,9 @@ export type PostsByCategoryResponse = {
   pagination: Pagination
   posts: Post[]
 }
+
+export type PostsByAuthorResponse = {
+  author: Category
+  pagination: Pagination
+  posts: Post[]
+}

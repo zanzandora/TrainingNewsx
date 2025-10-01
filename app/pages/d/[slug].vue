@@ -85,10 +85,15 @@ watch(
             class="flex flex-wrap items-center gap-2 text-sm text-gray-500 dark:text-gray-400"
           >
             <span>Viết bởi</span>
-            <UButton variant="link" color="primary" size="sm">
-              <UIcon name="i-heroicons-user-circle" class="h-4 w-4" />
-              {{ post?.author.name || 'Tác giả' }}
-            </UButton>
+            <NuxtLink
+              :to="`/author/${post?.author.name}`"
+              class="cursor-pointer"
+            >
+              <UButton variant="link" color="primary" size="sm">
+                <UIcon name="i-heroicons-user-circle" class="h-4 w-4" />
+                {{ post?.author.name || 'Tác giả' }}
+              </UButton>
+            </NuxtLink>
             <span>•</span>
             <UButton variant="link" color="primary" size="sm">
               <UIcon name="i-heroicons-tag" class="h-4 w-4" />

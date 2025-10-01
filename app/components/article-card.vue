@@ -61,6 +61,7 @@ const articles = computed(() => props.articles ?? [])
             {
               name: article.author.name,
               avatar: { src: article.author.avatar?.src },
+              to: `/author/${article.author.name}`,
             },
           ]"
           class="h-full transform shadow-md transition-all duration-300 hover:scale-[1.01] hover:shadow-lg"
