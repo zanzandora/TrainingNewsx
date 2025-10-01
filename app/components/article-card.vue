@@ -25,7 +25,8 @@ const articles = computed(() => props.articles ?? [])
         />
         <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
           <UBadge variant="solid" color="secondary" class="mb-4">
-            {{ post.categories?.[0] }}
+            <!-- {{ post.categories?.[0] }} -->
+            Trang chủ
           </UBadge>
 
           <h2 class="mb-4 text-3xl font-bold leading-tight">
